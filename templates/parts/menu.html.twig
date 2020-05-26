@@ -1,0 +1,41 @@
+<nav class="mon-menu navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <a class="navbar-brand" href="{{ path('index') }}">Deloitte</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse nav justify-content-end" id="navbarNav">
+      <ul class="navbar-nav font-weight-bold">
+        {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item mx-2">
+                <a class="hvr-underline-from-center nav-link {% if app.request.attributes.get('_route') == 'user_list' %}active{% endif %}" href="{{ path('user_list') }}">
+                    <i class="far fa-edit mr-2"></i>
+                    Gérer les utilisateurs
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="nav-item dropdown mx-2">
+                <a class="hvr-underline-from-center nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user mx-2"></i>
+                <span class="text-capitalize">
+                    {{ app.user.nom }}
+                </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right bg-primary" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="nav-link" href="{{ path('app_logout') }}">
+                        <i class="fas fa-sign-out-alt mr-2"></i>
+                        Se déconnecter
+                    </a>
+                </div>
+            </li>
+        {% else %}
+        <li class="nav-item hvr-underline-from-center mx-2">
+            <a class="nav-link" href="{{ path('app_login') }}">
+                <i class="fas fa-sign-in-alt mr-2"></i>
+                Se connecter
+            </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur Deloitte!{% endblock %}
+
+{% block body %}
+
+<div class="bg-light">
+    <div class="d-flex flex-column justify-content-center align-items-center mon-body container">
+        <div>
+            <h1>Bienvenue sur la plateforme de Deloitte</h1>
+        </div>
+
+        {% if app.user.secteur == 'Informatique' %}
+            {% include "secteurs/comptabilite.html.twig" %}
+        {% elseif  app.user.secteur == 'Comptabilité' %}
+            {% include "secteurs/informatique.html.twig" %}
+        {% else %}
+            {% include "secteurs/recrutement.html.twig" %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

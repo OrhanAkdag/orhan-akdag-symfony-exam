@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un utilisateur{% endblock %}
+
+{% block body %}
+<div class="bg-light">
+    <div class="d-flex flex-column justify-content-center align-items-center mon-body container">
+        <div class="jumbotron"> 
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <img src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('medium') }}" class="w-100">
+                    </div>
+                    <div class="col-8">
+                        <h1 class="display-4">{{ user.nom|capitalize }}</h1>
+                        <h4>
+                            {{ user.prenom|capitalize }}
+                        </h4>
+                        <h5>
+                        {{ user.email }}
+                        </h5>
+                        <p>
+                            {{ user.secteur }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div>
+                    <a href="{{ path('user_list') }}" class="nav-item btn btn-success text-white">Consulter les utilisateurs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

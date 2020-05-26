@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un utilisateur{% endblock %}
+
+{% block body %}
+<div class="bg-light">
+    <div class="d-flex flex-column justify-content-center align-items-center mon-body container">
+        <div class="p-2 bd-highlight w-100">            
+            <div class="p-2 bd-highlight">
+                <h1 class="text-center bg-primary text-white p-2">Ajout d'un utilisateur</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('index') }}">Accueil</a>
+                        </li>
+                    <li class="breadcrumb-item">
+                        <a active aria-current="page">Ajout d'un utilisateur!</a>
+                        </li>
+                    </ol>
+                </nav>
+                    <div class="my-2 shadow p-4">
+                        {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                        {{ form_start(form) }}
+                        {{ form_row(form.nom) }}
+                        {{ form_row(form.prenom) }}
+                        {{ form_row(form.secteur) }}
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.plainPassword) }}
+                        {{ form_row(form.imageFile) }}
+                        {{ form_label(form.save) }}
+                        {{ form_widget(form.save) }}
+                        {{ form_end(form) }}
+                    </div>
+                    <div>
+                        <a href="{{ path('user_list') }}" class="nav-item btn btn-success text-white">Revenir à mes articles</a>
+                    </div>
+            </div>
+            <div class="p-2 bd-highlight">
+                <ul>
+                    {% if form.vars.errors.form.getErrors(true)|length > 0 %}
+                    {% for error in form.vars.errors.form.getErrors(true) %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

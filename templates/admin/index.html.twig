@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs!{% endblock %}
+
+{% block body %}
+<div class="bg-light">
+    <div class="d-flex flex-column justify-content-center mon-body container">
+        <div class="w-100">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                      <a href="{{ path('index') }}">Accueil</a>
+                    </li>
+                  <li class="breadcrumb-item">
+                      <a active aria-current="page">Liste des utilisateurs</a>
+                    </li>
+                </ol>
+            </nav>  
+                {# read and display just one flash message type #}
+                {% for message in app.flashes('notice') %}
+                    <div class="alert alert-success" role="alert">
+                    {{ message }}
+                    </div>
+                {% endfor %}
+            <div class="d-flex justify-content-between p-3 bg-light">
+                <div class="count">
+                    Il y a {{ users.getTotalItemCount }} utilisateurs en base de données.
+                </div>
+                <div>
+                    <a href="{{ path('add_user')}}" class="nav-item btn btn-primary text-white">
+                        Ajouter un utilisateur
+                    </a>  
+                </div>
+            </div>
+        </div>
+        <table class="table shadow bg-white">
+            <tr>
+                {# sorting of properties based on query components #}
+                <th scope="col">
+                    {{ knp_pagination_sortable(users, 'Id', 'a.id') }}
+                </th>
+                <th scope="col">
+                    Image
+                </th>
+                <th
+                    {% if users.isSorted('a.nom') %} class="sorted col"{% endif %}>
+                    {{ knp_pagination_sortable(users, 'Nom', 'a.nom') }}
+                </th>
+                <th
+                    {% if users.isSorted('a.prenom') %} class="col sorted"{% endif %}>
+                    {{ knp_pagination_sortable(users, 'Prenom', 'a.prenom') }}
+                </th>
+                <th
+                    {% if users.isSorted(['a.secteur']) %} class="sorted col"{% endif %}>
+                    {{ knp_pagination_sortable(users, 'Secteur', ['a.secteur']) }}
+                </th>
+                <th scope="col">
+                    Action
+                </th>
+            </tr>
+                {# table body #}
+                {% for user in users %}
+                <tr {% if loop.index is odd %}class="color"{% endif %}>
+                    <th scope="row">
+                        {{ user.id }}
+                    </th>
+                    <td>
+                        <span>
+                            <img src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('list_thumb') }}" class="w-100" style="max-width: 100px !important;">
+                        </span>
+                    </td>
+                    <td>
+                        {{ user.nom }}
+                    </td>
+                    <td>
+                        {{ user.prenom }}
+                    </td>
+                    <td>
+                        {{ user.secteur }}
+                    </td>
+                    <td>
+                        <button class="btn btn-primary p-0">
+                            <a  href="{{ path('detail_user', {'user': user.id}) }}">
+                                <i class="fas fa-eye mx-2 text-white"></i>
+                            </a>
+                        </button>
+                        <button class="btn btn-primary p-0">
+                            <a  href="{{ path('edit_user', {'user': user.id}) }}">
+                                <i class="fas fa-edit mx-2 text-white"></i>
+                            </a>
+                        </button>
+                        <button class="btn btn-primary p-0" data-toggle="modal" data-target="#deleteModal{{user.id}}">
+                            <i class="fas fa-trash mx-2 text-white"></i>
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Suppression de l'utilisateur n° {{user.id}}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Souhaitez vous supprimé l'utilisateur?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                        <a href="{{ path('delete_user', {'user': user.id}) }}">
+                                            <button type="button" class="btn btn-primary">Confirmer</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %} 
+        </table>
+        <div class="d-flex justify-content-center">
+            {{ knp_pagination_render(users) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
