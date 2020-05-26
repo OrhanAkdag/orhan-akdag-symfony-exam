@@ -5,6 +5,20 @@
 {% block body %}
 <div class="bg-light">
     <div class="d-flex flex-column justify-content-center align-items-center mon-body container">
+        <div class="alert alert-primary my-5" role="alert">
+            <b>Droit Admin </b><br>
+            admin@deloitte.com <br>
+            admin123@ <br>
+            <b>Droit User</b><br>
+            user@deloitte.com <br>
+            admin123@ <br>
+            <b>
+                <p class="py-2">
+                    Je n'ai pas fait la traduction et la redirection pour le changement du mot de passe !
+                </p>
+            </b>
+          </div>
+
         <form method="post" class="p-5 shadow w-50">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
