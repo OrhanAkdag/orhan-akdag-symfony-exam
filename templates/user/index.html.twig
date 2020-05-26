@@ -10,9 +10,9 @@
             <h1>Bienvenue sur la plateforme de Deloitte</h1>
         </div>
 
-        {% if app.user.secteur == 'Informatique' %}
+        {% if app.user.secteur == 'Comptabilité' %}
             {% include "secteurs/comptabilite.html.twig" %}
-        {% elseif  app.user.secteur == 'Comptabilité' %}
+        {% elseif  app.user.secteur == 'Informatique' %}
             {% include "secteurs/informatique.html.twig" %}
         {% else %}
             {% include "secteurs/recrutement.html.twig" %}
